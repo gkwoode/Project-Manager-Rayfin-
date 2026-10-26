@@ -1,0 +1,246 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+/* Bridged tokens — kept in `@theme static` so the CSS vars are always
+   emitted, not tree-shaken when no Tailwind utility consumes them.
+   Required because <VegaVisual> and <DataGrid> read these at runtime via
+   `useCssTheme()` and project them into a JS theme object (Vega's SVG output
+   cannot resolve `var()` references). */
+@theme static {
+  --color-brand: #c4000a; /* Reliance crimson — fills, capsules, brand surfaces */
+  --color-brand-foreground: #c4000a; /* crimson text & emphasis on page surfaces */
+  --color-hover: #f1efec; /* row/cell hover surface */
+}
+
+@theme {
+  /* Color tokens — light theme
+     Usage: bg-*, text-*, border-* (e.g. bg-primary text-primary-foreground)
+     Each token has a -foreground pair for text on that surface. */
+  --color-background: #f6f5f2; /* warm paper page background */
+  --color-foreground: #141414; /* ink text */
+
+  --color-card: #ffffff; /* card surfaces */
+  --color-card-foreground: #141414;
+
+  --color-popover: #ffffff; /* popover/dropdown surfaces */
+  --color-popover-foreground: #141414;
+
+  --color-primary: #c4000a; /* primary actions & buttons */
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #efede9; /* secondary actions */
+  --color-secondary-foreground: #141414;
+
+  --color-muted: #efede9; /* subtle backgrounds, empty capsules */
+  --color-muted-foreground: #5f5a55; /* subdued text */
+
+  --color-accent: #fbe9ea; /* crimson-tinted highlight */
+  --color-accent-foreground: #8f0007;
+
+  --color-destructive: #b3261e; /* errors & destructive actions */
+  --color-destructive-foreground: #ffffff;
+
+  --color-success: #1e7b4f; /* completed */
+  --color-warning: #a15c07; /* on hold, due soon */
+  --color-info: #3f5f86; /* planning */
+
+  --color-border: #e4e1dc; /* default border */
+  --color-input: #d4cfc8; /* input field borders */
+  --color-ring: #c4000a; /* focus rings */
+
+  --color-scrim: rgb(10 10 10 / 0.55); /* modal backdrop in both themes */
+
+  /* The ink rail stays dark in both themes — it frames the brand mark. */
+  --color-sidebar: #141414;
+  --color-sidebar-foreground: #f5f3f0;
+  --color-sidebar-muted: #a39e99;
+  --color-sidebar-border: #2b2a29;
+  --color-sidebar-accent: #232120;
+
+  /* Layout widths — usage: w-sidebar, max-w-content, max-w-dialog */
+  --container-sidebar: 17rem;
+  --container-content: 80rem;
+  --container-dialog: 36rem;
+  --container-column: 18rem;
+
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-2xl: 12px;
+  --radius-3xl: 16px;
+  --radius-4xl: 24px;
+  --radius-5xl: 32px;
+  --radius-6xl: 40px;
+  --radius-full: 9999px;
+  --radius: 6px;
+
+  /* Spacing — 4px grid; use only these tokens, no interpolation. *-nudge = base − 2px.
+     Usage: p-*, m-*, gap-* (e.g. p-400 gap-300) */
+  --spacing-none: 0;
+  --spacing-100-nudge: 2px;
+  --spacing-100: 4px;
+  --spacing-200-nudge: 6px;
+  --spacing-200: 8px;
+  --spacing-300-nudge: 10px;
+  --spacing-300: 12px;
+  --spacing-400: 16px;
+  --spacing-500: 20px;
+  --spacing-600: 24px;
+  --spacing-700: 28px;
+  --spacing-800: 32px;
+  --spacing-1000: 40px;
+  --spacing-1200: 48px;
+
+  /* Font Sizes — 100-based scale
+     Usage: text-* (e.g. text-300, text-hero-900) */
+  --text-100: 10px;
+  --text-200: 12px;
+  --text-300: 14px;
+  --text-400: 16px;
+  --text-500: 20px;
+  --text-600: 24px;
+  --text-hero-700: 28px;
+  --text-hero-800: 32px;
+  --text-hero-900: 40px;
+  --text-hero-1000: 68px;
+
+  /* Line Heights — paired with font sizes
+     Usage: leading-* (e.g. leading-300) */
+  --leading-100: 14px;
+  --leading-200: 16px;
+  --leading-300: 20px;
+  --leading-400: 22px;
+  --leading-500: 28px;
+  --leading-600: 32px;
+  --leading-hero-700: 36px;
+  --leading-hero-800: 40px;
+  --leading-hero-900: 52px;
+  --leading-hero-1000: 92px;
+
+  /* Font Weights
+     Usage: font-* (e.g. font-semibold) */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Letter spacing — `tracking-wordmark` echoes the spaced "Infosystems" */
+  --tracking-wordmark: 0.28em;
+
+  /* Font Families
+     Usage: font-* (e.g. font-heading, font-base) */
+  --font-heading:
+    'Outfit', /* headings, titles, display text */ 'Segoe UI', -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  --font-base:
+    'DM Sans', /* body text, labels, UI controls */ 'Segoe UI', -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  --font-monospace:
+    'DM Mono', Consolas, 'Courier New', monospace; /* code, pre-formatted text */
+  --font-numeric:
+    'DM Mono', /* counts, dates, numeric displays */ Consolas, 'Courier New',
+    monospace;
+
+  /* Icon Sizes — 100-based scale
+     Usage: icon-size-* custom utility (e.g. icon-size-200) */
+  --icon-size-100: 12px;
+  --icon-size-200: 16px;
+  --icon-size-300: 20px;
+  --icon-size-400: 24px;
+  --icon-size-500: 28px;
+  --icon-size-600: 32px;
+  --icon-size-700: 48px;
+}
+
+@utility icon-size-* {
+  width: --value(--icon-size-*);
+  height: --value(--icon-size-*);
+}
+
+@layer base {
+  .dark {
+    /* Color tokens — dark theme */
+    --color-background: #121212;
+    --color-foreground: #f2f0ee;
+
+    --color-card: #1b1b1b;
+    --color-card-foreground: #f2f0ee;
+
+    --color-popover: #1f1f1f;
+    --color-popover-foreground: #f2f0ee;
+
+    --color-primary: #d0101a;
+    --color-primary-foreground: #ffffff;
+
+    --color-secondary: #262524;
+    --color-secondary-foreground: #f2f0ee;
+
+    --color-muted: #2a2928;
+    --color-muted-foreground: #aaa59f;
+
+    --color-accent: #2c1718;
+    --color-accent-foreground: #ffc9cb;
+
+    --color-destructive: #d32f2f;
+    --color-destructive-foreground: #ffffff;
+
+    --color-success: #5bd08e;
+    --color-warning: #f2b04a;
+    --color-info: #8fb5e3;
+
+    --color-border: #2e2d2c;
+    --color-input: #3d3b39;
+    --color-ring: #ff5a5f;
+
+    --color-sidebar: #0c0c0c;
+    --color-sidebar-border: #222120;
+    --color-sidebar-accent: #1c1b1a;
+
+    --color-brand: #d0101a;
+    --color-brand-foreground: #ff5a5f;
+    --color-hover: #262524;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background font-base text-foreground antialiased;
+  }
+
+  /* Native form controls do not inherit the page font by default. */
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-heading;
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
